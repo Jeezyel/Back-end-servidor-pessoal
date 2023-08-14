@@ -6,7 +6,7 @@ import jakarta.persistence.Entity;
 @Entity
 public class Telefone extends DefaltEntity{
     
-   private String codigoDeArea;
+    private String codigoDeArea;
     private String numero;
 
     

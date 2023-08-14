@@ -7,6 +7,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 
 @Entity
@@ -19,11 +20,11 @@ public class Cliente extends DefaltEntity {
     private String senha;
     @Column( nullable = false)
     private String cpf;
-
-    // private Telefone telefone;
+    @OneToOne
+    private Telefone telefone;
     @ElementCollection
     @CollectionTable(name = "perfis", joinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "id"))
-    @Column(name = "perfil", length = 8, nullable = false)
+    @Column(name = "perfil", nullable = false)
     private Set<Perfil> perfis;
 
 
@@ -57,4 +58,11 @@ public class Cliente extends DefaltEntity {
     public void setPerfis(Set<Perfil> perfis) {
         this.perfis = perfis;
     }
+    public Telefone getTelefone() {
+        return telefone;
+    }
+    public void setTelefone(Telefone telefone) {
+        this.telefone = telefone;
+    }
+    
 }
