@@ -37,4 +37,5 @@ public class ClienteRepository implements PanacheRepository<Cliente> {
 
         return find("login = ?1 AND senha = ?2 ", login, senha).firstResult();
     }
+    
 }

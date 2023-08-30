@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.acme.dto.ClienteDTO;
 import org.acme.dto.ClienteResponseDTO;
+import org.acme.model.Cliente;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -12,6 +13,8 @@ public interface ClienteService {
 
     
     Boolean alterarSenha(String login ,String senhaAtual , String novaSenha);
+
+    Boolean alterarLogim(String loginAtual, String loginNova ,String senha);
     
     List<ClienteResponseDTO> getAll();
     
@@ -19,8 +22,10 @@ public interface ClienteService {
 
     ClienteResponseDTO update(String login, ClienteDTO clienteDTO);
     
-    void delete(Long id);
+    void delete(String login);
 
-    ClienteResponseDTO get();
+    ClienteResponseDTO get(String login);
+
+    Cliente findByLoginAndSenha(String login, String senha);
 
 }
