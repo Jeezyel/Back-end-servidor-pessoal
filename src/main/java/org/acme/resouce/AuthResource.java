@@ -3,8 +3,8 @@ package org.acme.resouce;
 import org.acme.dto.AuthUsuarioDTO;
 import org.acme.model.Cliente;
 import org.acme.service.ClienteService;
+import org.acme.service.ClienteServiceMPL;
 import org.acme.service.HashService;
-import org.acme.service.HashServiceMPL;
 import org.acme.service.TokenJwtService;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.logging.Logger;
@@ -57,14 +57,10 @@ public class AuthResource {
            
         
     }
-
-    //so pra poder pegar o hash pra colocar no inportSQL
     public static void main(String[] args) {
-        
-        HashServiceMPL hashService = new HashServiceMPL();
+        ClienteService cli = new ClienteServiceMPL();
 
-		
-		System.out.print("e so isso: " + hashService.getHashSenha("123"));
+		cli.findByLoginAndSenha("kk", "123");
 	}
 
 }

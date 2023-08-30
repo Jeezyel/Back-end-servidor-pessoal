@@ -16,6 +16,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
+import jakarta.ws.rs.ClientErrorException;
 
 @ApplicationScoped
 public class ClienteServiceMPL implements ClienteService {
@@ -140,7 +141,18 @@ public class ClienteServiceMPL implements ClienteService {
     @Override
     public Cliente findByLoginAndSenha(String login, String senha)  throws NullPointerException{
         LOG.debug("pegando o cliente pelo login e a senha");
+       /* Cliente cliente = clienteRepository.findByLogin(login);
+        if(cliente != null && cliente.getSenha() == senha ){
+            return  cliente;
+        }else{
+            return null;
+        } */
+        Cliente cliente = clienteRepository.findByLoginAndSenha(login, hashService.getHashSenha(senha));
+
         return clienteRepository.findByLoginAndSenha(login, hashService.getHashSenha(senha));
+        
+
+        
     }
 
     

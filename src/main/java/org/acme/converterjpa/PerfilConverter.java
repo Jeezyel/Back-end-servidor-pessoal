@@ -1,14 +1,12 @@
 package org.acme.converterjpa;
 
-
-import org.acme.model.Perfil;
-
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
+import org.acme.model.Perfil;
 
 @Converter(autoApply = true)
-public class PerfilConverter implements AttributeConverter<Perfil, String>{
+public class PerfilConverter implements AttributeConverter< Perfil, String>{
 
     @Override
     public String convertToDatabaseColumn(Perfil perfil) {
