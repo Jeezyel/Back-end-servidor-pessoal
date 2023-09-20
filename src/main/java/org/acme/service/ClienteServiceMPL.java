@@ -146,13 +146,12 @@ public class ClienteServiceMPL implements ClienteService {
         }else{
             return null;
         } */
-
-        
-
         return clienteRepository.findByLoginAndSenha(login, hashService.getHashSenha(senha));
         
-
-        
+    }
+    @Override
+    public long count(){
+        return clienteRepository.count();
     }
 
     

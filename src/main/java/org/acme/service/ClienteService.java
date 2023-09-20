@@ -28,4 +28,6 @@ public interface ClienteService {
 
     Cliente findByLoginAndSenha(String login, String senha);
 
+    long count();
+
 }
