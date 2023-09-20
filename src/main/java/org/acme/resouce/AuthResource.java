@@ -3,7 +3,6 @@ package org.acme.resouce;
 import org.acme.dto.AuthUsuarioDTO;
 import org.acme.model.Cliente;
 import org.acme.service.ClienteService;
-import org.acme.service.ClienteServiceMPL;
 import org.acme.service.HashService;
 import org.acme.service.TokenJwtService;
 import org.eclipse.microprofile.jwt.JsonWebToken;
@@ -57,10 +56,5 @@ public class AuthResource {
            
         
     }
-    public static void main(String[] args) {
-        ClienteService cli = new ClienteServiceMPL();
-
-		cli.findByLoginAndSenha("kk", "123");
-	}
 
 }

@@ -16,7 +16,6 @@ import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
-import jakarta.ws.rs.ClientErrorException;
 
 @ApplicationScoped
 public class ClienteServiceMPL implements ClienteService {
@@ -147,7 +146,8 @@ public class ClienteServiceMPL implements ClienteService {
         }else{
             return null;
         } */
-        Cliente cliente = clienteRepository.findByLoginAndSenha(login, hashService.getHashSenha(senha));
+
+        
 
         return clienteRepository.findByLoginAndSenha(login, hashService.getHashSenha(senha));
         
