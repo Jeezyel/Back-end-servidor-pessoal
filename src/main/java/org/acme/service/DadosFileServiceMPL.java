@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.UUID;
 
 import jakarta.inject.Inject;
+import org.acme.model.Cliente;
 import org.acme.model.Dados;
+import org.acme.repository.ClienteRepository;
 import org.acme.repository.DadosRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
@@ -24,19 +26,19 @@ public class DadosFileServiceMPL implements FileService{
     private final String PATH_USER = System.getProperty("user.home")
             + File.separator + "quarkus"
             + File.separator + "images"
-            + File.separator + "consulta" + File.separator;
+            + File.separator + "file" + File.separator;
 
     @Inject
-    DadosRepository dadosRepository;
+    ClienteRepository clienteRepository;
 
     @Override
     @Transactional
     public void salvar(Long id, String nomeImagem, byte[] imagem) {
-        Dados dados = dadosRepository.findById(id);
+        Cliente cliente = clienteRepository.findById(id);
 
         try {
             salvarImagem(imagem, nomeImagem);
-            dados.setNome(nomeImagem);
+            cliente.setNome(nomeImagem);
             // excluir a imagem antiga (trabalho pra quem????)
         } catch (IOException e) {
             throw new ValidationException("imagem", e.toString());

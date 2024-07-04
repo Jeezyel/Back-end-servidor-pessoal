@@ -1,9 +1,15 @@
 package org.acme.model;
 import jakarta.persistence.Entity;
 
+//import jakarta.ws.rs.FormParam;
+//import org.jboss.resteasy.annotations.providers.multipart.PartType;
+
 @Entity
 public class Dados extends DefaltEntity {
     private String nome;
+//    @FormParam("imagem")
+//    @PartType("application/octet-stream")
+//    private byte[] imagem;
 
     public String getNome() {
         return nome;
