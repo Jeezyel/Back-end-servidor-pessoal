@@ -7,9 +7,7 @@ import jakarta.persistence.Entity;
 @Entity
 public class Dados extends DefaltEntity {
     private String nome;
-//    @FormParam("imagem")
-//    @PartType("application/octet-stream")
-//    private byte[] imagem;
+
 
     public String getNome() {
         return nome;

@@ -7,32 +7,21 @@ import jakarta.ws.rs.core.MediaType;
 
 public class DadosImageForm {
 
-    @FormParam("idUser")
-    @PartType(MediaType.TEXT_PLAIN)
-    private Long id;
 
     @FormParam("nomeImagem")
     @PartType(MediaType.TEXT_PLAIN)
-    private String nomeImagem;
+    private String nomeFile;
 
     @FormParam("imagem")
     @PartType("application/octet-stream")
     private byte[] imagem;
 
-    public Long getId() {
-        return id;
+    public String getNomeFile() {
+        return nomeFile;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNomeImagem() {
-        return nomeImagem;
-    }
-
-    public void setNomeImagem(String nomeImagem) {
-        this.nomeImagem = nomeImagem;
+    public void setNomeFile(String nomeFile) {
+        this.nomeFile = nomeFile;
     }
 
     public byte[] getImagem() {
