@@ -9,20 +9,20 @@ import java.io.InputStream;
 
 public class VideoForm {
 
-    @FormParam("nomeImagem")
+    @FormParam("nomeFile")
     @PartType(MediaType.TEXT_PLAIN)
     private String nomeFile;
 
     @FormParam("video")
     @PartType(MediaType.APPLICATION_OCTET_STREAM)
-    private InputStream videoData;
+    private InputStream video;
 
-    public InputStream getVideoData() {
-        return videoData;
+    public InputStream getVideo() {
+        return video;
     }
 
-    public void setVideoData(InputStream videoData) {
-        this.videoData = videoData;
+    public void setVideo(InputStream video) {
+        this.video = video;
     }
 
     public String getNomeFile() {

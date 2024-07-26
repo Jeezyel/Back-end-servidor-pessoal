@@ -12,4 +12,10 @@ public class DadosRepository implements PanacheRepository<Dados> {
             return null;
         return find("UPPER(nome) LIKE ?1 ", "%" + nome.toUpperCase() + "%");
     }
+
+    public PanacheQuery<Dados> findByType(String type) {
+        if (type == null)
+            return null;
+        return find("UPPER(nome) LIKE ?1 ", "%" + type.toLowerCase());
+    }
 }

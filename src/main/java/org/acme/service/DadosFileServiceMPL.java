@@ -120,40 +120,39 @@ public class DadosFileServiceMPL implements FileService{
 
     }
 
-    private void salvarVideo(byte[] videos, String nomeVideos) throws IOException {
+    public void salvarVideo(byte[] video, String nomeVideo) throws IOException {
+        // Verificando o tipo do vídeo
+        String mimeType = Files.probeContentType(new File(nomeVideo).toPath());
+        List<String> listMimeType = Arrays.asList("video/mp4", "video/avi", "video/mkv", "video/mov");
+        if (!listMimeType.contains(mimeType)) {
+            throw new IOException("Tipo de vídeo não suportado.");
+        }
 
-        // verificando o tipo da imagem
-        String mimeType = Files.probeContentType(new File(nomeVideos).toPath());
 
 
-
-        // criando as pastas quando não existir
+        // Criando as pastas quando não existir
         File diretorio = new File(PATH_USER);
-        if (!diretorio.exists())
+        if (!diretorio.exists()) {
             diretorio.mkdirs();
+        }
 
-        // gerando o nome do arquivo
-//        String nomeArquivo = UUID.randomUUID()
-//                +"."+mimeType.substring(mimeType.lastIndexOf("/")+1);
 
-        String path = PATH_USER + nomeVideos;
+        String path = PATH_USER + nomeVideo;
 
-        // salvando o arquivo
+        // Salvando o arquivo
         File file = new File(path);
-        // alunos (melhorar :)
-        if (file.exists())
-            throw new IOException("O nome gerado da imagem está repedido.");
+        if (file.exists()) {
+            throw new IOException("O nome gerado do vídeo está repetido.");
+        }
 
-        // criando um arquivo no S.O.
+        // Criando um arquivo no S.O.
         file.createNewFile();
 
         FileOutputStream fos = new FileOutputStream(file);
-        fos.write(videos);
-        // garantindo o envio do ultimo lote de bytes
+        fos.write(video);
+        // Garantindo o envio do último lote de bytes
         fos.flush();
         fos.close();
-
-
     }
 
     @Override
@@ -168,5 +167,34 @@ public class DadosFileServiceMPL implements FileService{
         dados.setNome(nomeImagem);
 
         dadosRepository.persist(dados);
+    }
+
+    @Override
+    public List<Dados> findByType(String type) {
+
+        try {
+            return dadosRepository.findByType(type).list();
+        }catch (Exception e){
+            return null;
+        }
+
+    }
+
+    @Override
+    public List<Dados> findByName(String name) {
+        try {
+            return dadosRepository.findByNome(name).list();
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @Override
+    public void DeleteByName(String name) {
+        try {
+            dadosRepository.delete(dadosRepository.findByNome(name).firstResult());
+        }catch (Exception e){
+            throw new ValidationException("delete ", e.toString());
+        }
     }
 }

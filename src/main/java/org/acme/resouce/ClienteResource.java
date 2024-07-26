@@ -2,8 +2,8 @@ package org.acme.resouce;
 
 import java.util.List;
 
+import jakarta.ws.rs.core.Response;
 import org.acme.dto.ClienteDTO;
-import org.acme.dto.ClienteResponseDTO;
 import org.acme.service.ClienteService;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.logging.Logger;
@@ -30,16 +30,16 @@ public class ClienteResource {
     @Inject
     ClienteService clienteservice;
 
-    @Inject
-    JsonWebToken tokenJwt;
+//    @Inject
+//    JsonWebToken tokenJwt;
 
 
     @GET
     @Path("/getAll")
    // @RolesAllowed({"Admin"})
-    public List<ClienteResponseDTO> getAll(){
+    public Response getAll(){
         LOG.info("buscnado todos os clientes");
-        return clienteservice.getAll();
+        return Response.ok(clienteservice.getAll()).build();
     }
 
 
@@ -48,20 +48,20 @@ public class ClienteResource {
     @Path("/insert")
   //  @RolesAllowed({"Admin"})
     @Transactional
-    public ClienteResponseDTO insert(ClienteDTO clienteDTO) {
+    public Response insert(ClienteDTO clienteDTO) {
         LOG.info("criando clientes");
-        return clienteservice.create(clienteDTO);
+        return Response.ok(clienteservice.create(clienteDTO)).build();
     }
     // update
     @POST
     @Path("/update/{login}")
    // @RolesAllowed({"Admin","User"})
     @Transactional
-    public ClienteResponseDTO update(@PathParam("login") String login, ClienteDTO clienteDTO) {
+    public Response update(@PathParam("login") String login, ClienteDTO clienteDTO) {
 
         LOG.info("atualizando o clientes selecionado pelo id");
         
-        return clienteservice.update(login , clienteDTO);
+        return Response.ok(clienteservice.update(login , clienteDTO)).build();
     }
 
   /*   @POST
@@ -96,9 +96,9 @@ public class ClienteResource {
     @GET
     @Path("/searchForLogin/{login}")
   //  @RolesAllowed({"Admin","User"})
-    public ClienteResponseDTO searchForLogin(@PathParam("login") String login){
+    public Response searchForLogin(@PathParam("login") String login){
 
         LOG.info("procurando por login do cliente");
-        return clienteservice.get(login);
+        return Response.ok(clienteservice.get(login)).build();
     }
 }

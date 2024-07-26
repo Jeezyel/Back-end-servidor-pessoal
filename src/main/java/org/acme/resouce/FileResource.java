@@ -11,6 +11,7 @@ import org.acme.service.FileService;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -42,26 +43,6 @@ public class FileResource {
     }
 
 
-//    @PUT
-//    @Path("/{id}")
-//    @Consumes(MediaType.MULTIPART_FORM_DATA)
-//    public Response updateVideo(@PathParam("id") String id, @MultipartForm VideoForm form) {
-//        try {
-//            // Caminho onde os vídeos são armazenados
-//            Path videoPath = Paths.get("videos", id + ".mp4");
-//
-//            // Sobrescrever o vídeo existente
-//            try (InputStream inputStream = form.getVideoData()) {                                   //analizar o que o chatgpt fez e melhorar para o seu projeto
-//                Files.copy(inputStream, videoPath);
-//            }
-//
-//            return Response.ok("Vídeo atualizado com sucesso.").build();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro ao atualizar o vídeo.").build();
-//        }
-//    }
-
     @GET
     @Path("/image/download/{nomeImagem}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
@@ -71,4 +52,45 @@ public class FileResource {
         response.header("Content-Disposition", "attachment;filename=" + nomeImagem);
         return response.build();
     }
+
+    @PATCH
+    @Path("/video/upload")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response salvarVideo(@MultipartForm VideoForm form) {
+        try {
+            LOG.info("Nome do vídeo: " + form.getNomeFile());
+
+            // Converter InputStream para byte[]
+            byte[] videoBytes = form.getVideo().readAllBytes();
+
+            fileService.salvarVideo(form.getNomeFile() , videoBytes);
+            return Response.noContent().build();
+        } catch (IOException e) {
+            LOG.error("Erro ao salvar o vídeo", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro ao salvar o vídeo.").build();
+        }
+    }
+
+    @GET
+    @Path("GetAllType/{tipoDoArquivo}")
+    public Response findByType (@PathParam("tipoDoArquivo") String tipoDoArquivo){
+        LOG.info("GetAllType");
+        return Response.ok(fileService.findByType(tipoDoArquivo)).build();
+    }
+
+    @GET
+    @Path("findByName/{name}")
+    public Response findByName (@PathParam("name") String name){
+        LOG.info("findByName");
+        return Response.ok(fileService.findByName(name)).build();
+    }
+
+    @DELETE
+    @Path("deletebyname/{name}")
+    public void DeleteByName(@PathParam("name") String name){
+        LOG.info("deleteByName");
+        fileService.DeleteByName(name);
+    }
+
+
 }

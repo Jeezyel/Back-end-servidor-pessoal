@@ -48,9 +48,8 @@ public class AuthResource {
             return Response.status(Status.NO_CONTENT)
                 .entity("Usuario não encontrado").build();
         } 
-        LOG.info(" caso não de nada de errado");
-        return Response.ok()
-            .header("Authorization", tokenService.generateJwt(cliente)).build();
+        LOG.info(" ENCONTROU O CLIENTE");
+        return Response.ok().header("Authorization", tokenService.generateJwt(cliente)).build();
          
         
            
